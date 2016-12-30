@@ -8,8 +8,9 @@
 
 	<link rel="import" href="../iron-demo-helpers/demo-pages-shared-styles.html">
 	<link rel="import" href="../iron-demo-helpers/demo-snippet.html">
+	<link rel="import" href="../paper-button/paper-button.html">
 
-	<link rel="import" href="../now-starter-element.html">
+	<link rel="import" href="../now-confirm-dialog.html">
 
 	<style is="custom-style" include="demo-pages-shared-styles">
 		#mainDiv {
@@ -21,11 +22,105 @@
 <body>
 <span id="browser-sync-binding"></span>
 <div id="mainDiv" class="vertical-section-container centered">
-	<h3>Basic now-starter-element Demo</h3>
 
+	<h3>Basic now-confirm-dialog Demo</h3>
 	<demo-snippet>
 		<template>
-			<now-starter-element prop1="World"></now-starter-element>
+			<now-confirm-dialog
+				id="basic"
+				dialog-title="Basic Confirmation Dialog Title"
+				dialog-text="Here is some text for the dialog. Yes?">
+			</now-confirm-dialog>
+			<paper-button id="basicButton">Open Basic Confirm Dialog</paper-button>
+			<script>
+				var button = document.querySelector('#basicButton').addEventListener('click', function() {
+					var confirmCallback = function() {
+						alert('Dialog Confirmed!');
+					}
+					var cancelCallback = function() {
+						alert('Dialog Cancelled!');
+					}
+					var dialog = document.querySelector('#basic');
+					dialog.open(confirmCallback, cancelCallback);
+				});
+			</script>
+		</template>
+	</demo-snippet>
+
+	<h3>Custom colors and Dynamic Text now-confirm-dialog Demo</h3>
+	<demo-snippet>
+		<template>
+			<now-confirm-dialog
+				id="customText"
+				confirm-button-background="purple"
+				confirm-button-color="black"
+				cancel-button-background="pink"
+				cancel-button-color="black">
+			</now-confirm-dialog>
+			<paper-button id="customColorButton">Open Custom Color and Text Confirm Dialog</paper-button>
+			<script>
+				var dialog = document.querySelector('#customText');
+				dialog.dialogTitle = "Title set with JavaScript";
+				var computed = 'computed';
+				dialog.dialogText = 'This text was dynamically ' + computed + '. Should have a purple confirm button and pink cancel button.';
+				var button = document.querySelector('#customColorButton').addEventListener('click', function() {
+					var confirmCallback = function() {
+						alert('Dialog Confirmed!');
+					}
+					var cancelCallback = function() {
+						alert('Dialog Cancelled!');
+					}
+					dialog.open(confirmCallback, cancelCallback);
+				});
+			</script>
+		</template>
+	</demo-snippet>
+
+	<h3>Custom Buttons now-confirm-dialog Demo</h3>
+	<demo-snippet>
+		<template>
+			<now-confirm-dialog
+				id="customButtons"
+				cancel-button-text="Nope"
+				confirm-button-text="Yup"
+				dialog-title="Custom button text"
+				dialog-text="The cancel and confirm buttons should have custom text">
+			</now-confirm-dialog>
+			<paper-button id="customButtonsButton">Open Custom Buttons Confirm Dialog</paper-button>
+			<script>
+				var button = document.querySelector('#customButtonsButton').addEventListener('click', function() {
+					var dialog = document.querySelector('#customButtons');
+					var confirmCallback = function() {
+						alert('Dialog Confirmed!');
+					}
+					var cancelCallback = function() {
+						alert('Dialog Cancelled!');
+					}
+					dialog.open(confirmCallback, cancelCallback);
+				});
+			</script>
+		</template>
+	</demo-snippet>
+
+	<h3>No Cancel Button now-confirm-dialog Demo</h3>
+	<demo-snippet>
+		<template>
+			<now-confirm-dialog
+				id="noCancelButton"
+				dialog-title="No Cancel Button Dialog"
+				dialog-text="There should be no cancel button"
+				no-cancel-button>
+			</now-confirm-dialog>
+			<paper-button id="noCancelButtonButton">Open Confirm Dialog No Cancel Button</paper-button>
+			<script>
+				var button = document.querySelector('#noCancelButtonButton').addEventListener('click', function() {
+					var dialog = document.querySelector('#noCancelButton');
+					var confirmCallback = function() {
+						alert('Dialog Confirmed!');
+					}
+					dialog.open(confirmCallback, null);
+				});
+			</script>
 		</template>
 	</demo-snippet>
 </div>

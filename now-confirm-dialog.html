@@ -1,0 +1,71 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer-ts/polymer-ts.html">
+<link rel="import" href="../now-core/now-core.html">
+
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+
+<link rel="import" href="../neon-animation/neon-animations.html">
+<!--
+`now-confirm-dialog`
+
+Confirmation dialog for use in Red Pill Now applications
+
+@author Keith Strickland
+@demo demo/index.html
+-->
+<dom-module id="now-confirm-dialog">
+	<template>
+		<style>
+			:host {
+				display: block;
+				box-sizing: border-box;
+				max-width: 450px;
+
+				--paper-dialog: {
+					max-width: 450px;
+				};
+			}
+			.cancelButton {
+				background: var(--now-confirm-dialog-cancel-button-background, #c12e2a);
+				color: var(--now-confirm-dialog-cancel-button-color, white);
+			}
+			.confirmButton {
+				background: var(--now-confirm-dialog-confirm-button-background, #419641);
+				color: var(--now-confirm-dialog-confirm-button-color, white);
+			}
+			.dialogText {
+				padding: 15px;
+				margin-top: 0;
+			}
+		</style>
+
+		<paper-dialog
+			id="dialog"
+			entry-animation="scale-up-animation"
+			exit-animation="fade-out-animation"
+			modal>
+			<h2>{{dialogTitle}}</h2>
+			<div class="dialogText">
+				{{dialogText}}
+			</div>
+			<div class="buttons">
+				<paper-button
+					class="cancelButton"
+					hidden$="{{noCancelButton}}"
+					dialog-dismiss>
+					{{cancelButtonText}}
+				</paper-button>
+				<paper-button
+					class="confirmButton"
+					dialog-confirm
+					autofocus>
+					{{confirmButtonText}}
+				</paper-button>
+			</div>
+		</paper-dialog>
+
+	</template>
+</dom-module>
+
+<script type="text/javascript" src="now-confirm-dialog.js"></script>

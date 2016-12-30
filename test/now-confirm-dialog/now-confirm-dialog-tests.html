@@ -12,17 +12,31 @@
 	<link rel="import" href="../../../now-core/now-test-core.html">
 
 	<!-- Import the element to test -->
-	<link rel="import" href="../../now-starter-element.html">
+	<link rel="import" href="../../now-confirm-dialog.html">
 
 </head>
 <body>
 <span id="browser-sync-binding"></span>
-<test-fixture id="now-starter-element">
+<test-fixture id="now-confirm-dialog">
 	<template>
-		<now-starter-element></now-starter-element>
+		<now-confirm-dialog
+			dialog-title="Test Title"
+			dialog-text="Some test text">
+		</now-confirm-dialog>
 	</template>
 </test-fixture>
 
-<script type="text/javascript" src="now-starter-element-tests.js"></script>
+<test-fixture id="now-confirm-dialog-dynamic">
+	<template>
+		<now-confirm-dialog
+			confirm-button-background="purple"
+			confirm-button-color="black"
+			cancel-button-background="pink"
+			cancel-button-color="black">
+		</now-confirm-dialog>
+	</template>
+</test-fixture>
+
+<script type="text/javascript" src="now-confirm-dialog-tests.js"></script>
 </body>
 </html>

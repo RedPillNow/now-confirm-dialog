@@ -1,7 +1,7 @@
 {
-  "name": "now-starter-element",
-  "version": "0.0.0",
-  "description": "Simple layout element with common CSS to be used for simpler Red Pill Now applications.",
+  "name": "now-confirm-dialog",
+  "version": "1.0.0",
+  "description": "Confirmation Dialog",
   "engines": {
     "node": ">=4.0"
   },
