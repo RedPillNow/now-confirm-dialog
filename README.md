@@ -1,6 +1,6 @@
 # <now-confirm-dialog\>
 
-A confirmation dialog which should closely mimic the ability of a plain JavaScript confirm command. This dialog provides confirm and cancel callbacks to
+A confirmation dialog which should closely mimic the ability of a plain JavaScript `confirm` command. This dialog provides confirm and cancel callbacks to
 run based on what the user clicks. It is also highly customizable.
 
 ## Example
