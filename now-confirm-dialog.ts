@@ -207,9 +207,16 @@ namespace NowElements {
 		}
 		/**
 		 * Closes the dialog. Will cause the cancel callback to be run
+		 * in the iron-overlay-closed event handler
 		 */
 		close() {
 			this.$.dialog.close();
+			if (this.targetMoveCssSelector) {
+				let movedDialog = document.querySelector(this.targetMoveCssSelector + ' > now-confirm-dialog');
+				if (movedDialog) {
+					movedDialog.parentNode.removeChild(movedDialog);
+				}
+			}
 		}
 	}
 }
