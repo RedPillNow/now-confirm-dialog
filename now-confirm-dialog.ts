@@ -104,7 +104,18 @@ namespace NowElements {
 			type: Function
 		})
 		_confirmCallback: any;
-
+		/**
+		 * This is a fix for a modal dialog's overlay being overlay
+		 * the dialog itself
+		 * @param {Event} evt
+		 * @listens iron-overlay-opened
+		 */
+		@listen('dialog.iron-overloay-opened')
+		patchOverlay(evt) {
+			if (evt.target.withBackdrop) {
+				evt.target.parentNode.insertBefore(evt.target.backdropElement, evt.target);
+			}
+		}
 		/**
 		 * Fired when the dialog closes. Fires dig-confirm-canceled and dig-confirm-confirmed. Also
 		 * runs any cancelCallback or confirmCallback methods
