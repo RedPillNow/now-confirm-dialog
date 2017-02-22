@@ -105,17 +105,15 @@ namespace NowElements {
 		})
 		_confirmCallback: any;
 		/**
-		 * This is a fix for a modal dialog's overlay being overlay
-		 * the dialog itself
-		 * @param {Event} evt
-		 * @listens iron-overlay-opened
+		 * Define this property to move this element when opened into the element
+		 * with the provided selector. This is to ensure that the overlay
+		 * does not appear over the dialog.
 		 */
-		@listen('dialog.iron-overloay-opened')
-		patchOverlay(evt) {
-			if (evt.target.withBackdrop) {
-				evt.target.parentNode.insertBefore(evt.target.backdropElement, evt.target);
-			}
-		}
+		@property({
+			type: String
+		})
+		targetMoveCssSelector: string;
+
 		/**
 		 * Fired when the dialog closes. Fires dig-confirm-canceled and dig-confirm-confirmed. Also
 		 * runs any cancelCallback or confirmCallback methods
@@ -187,6 +185,18 @@ namespace NowElements {
 		 * @param  {Function} cancelCallback  Function to run when the dialog is cancelled
 		 */
 		open(confirmCallback, cancelCallback) {
+			// WARNING!!! TODO:
+			// Moving this as a child of a top level element, outside of the app-*-layout element
+			// is to fix this bug https://github.com/PolymerElements/paper-dialog/issues/7
+			// which is kind of ridiculus for a production ready platform.
+			// Luckily there really is no data binding with this component or that too
+			// would be broken.
+			if (this.targetMoveCssSelector) {
+				let elem = document.querySelector(this.targetMoveCssSelector);
+				if (elem) {
+					elem.appendChild(this);
+				}
+			}
 			this.$.dialog.open();
 			if (cancelCallback) {
 				this._cancelCallback = cancelCallback;
