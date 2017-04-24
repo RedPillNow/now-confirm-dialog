@@ -11,6 +11,8 @@ declare namespace NowElements {
         noCancelButton: boolean;
         _cancelCallback: any;
         _confirmCallback: any;
+        targetMoveCssSelector: string;
+        private _onDialogTextChange(dialogText);
         _onDialogClosed(evt: any, detail: any): void;
         _onConfirmBackgroundChange(newVal: any, oldVal: any): void;
         _onConfirmColorChange(newVal: any, oldVal: any): void;

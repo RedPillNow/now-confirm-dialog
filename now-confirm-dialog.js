@@ -16,6 +16,14 @@ var NowElements;
         function NowConfirmDialog() {
             _super.apply(this, arguments);
         }
+        NowConfirmDialog.prototype._onDialogTextChange = function (dialogText) {
+            if (dialogText.indexOf('\n') > -1) {
+                this.toggleClass('preText', true, this.$.dialogText);
+            }
+            else {
+                this.toggleClass('preText', false, this.$.dialogText);
+            }
+        };
         NowConfirmDialog.prototype._onDialogClosed = function (evt, detail) {
             if (!detail.confirmed) {
                 if (this._cancelCallback) {
@@ -55,6 +63,12 @@ var NowElements;
             }
         };
         NowConfirmDialog.prototype.open = function (confirmCallback, cancelCallback) {
+            if (this.targetMoveCssSelector) {
+                var elem = document.querySelector(this.targetMoveCssSelector);
+                if (elem) {
+                    elem.appendChild(this);
+                }
+            }
             this.$.dialog.open();
             if (cancelCallback) {
                 this._cancelCallback = cancelCallback;
@@ -65,6 +79,12 @@ var NowElements;
         };
         NowConfirmDialog.prototype.close = function () {
             this.$.dialog.close();
+            if (this.targetMoveCssSelector) {
+                var movedDialog = document.querySelector(this.targetMoveCssSelector + ' > now-confirm-dialog');
+                if (movedDialog) {
+                    movedDialog.parentNode.removeChild(movedDialog);
+                }
+            }
         };
         __decorate([
             property({
@@ -129,6 +149,14 @@ var NowElements;
                 type: Function
             })
         ], NowConfirmDialog.prototype, "_confirmCallback", void 0);
+        __decorate([
+            property({
+                type: String
+            })
+        ], NowConfirmDialog.prototype, "targetMoveCssSelector", void 0);
+        __decorate([
+            observe('dialogText')
+        ], NowConfirmDialog.prototype, "_onDialogTextChange", null);
         __decorate([
             listen('dialog.iron-overlay-closed')
         ], NowConfirmDialog.prototype, "_onDialogClosed", null);

@@ -37,6 +37,8 @@ Confirmation dialog for use in Red Pill Now applications
 			.dialogText {
 				padding: 15px;
 				margin-top: 0;
+			}
+			.dialogText.preText {
 				white-space: pre;
 			}
 		</style>
@@ -48,7 +50,7 @@ Confirmation dialog for use in Red Pill Now applications
 			modal>
 			<h2>{{dialogTitle}}</h2>
 			<!-- Whitespace is rendered which is why the dialogText is not indented -->
-			<div class="dialogText">
+			<div id="dialogText" class="dialogText">
 {{dialogText}}
 			</div>
 			<div class="buttons">

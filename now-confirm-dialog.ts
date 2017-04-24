@@ -114,6 +114,14 @@ namespace NowElements {
 		})
 		targetMoveCssSelector: string;
 
+		@observe('dialogText')
+		private _onDialogTextChange(dialogText) {
+			if (dialogText.indexOf('\n') > -1) {
+				this.toggleClass('preText', true, this.$.dialogText);
+			} else {
+				this.toggleClass('preText', false, this.$.dialogText);
+			}
+		}
 		/**
 		 * Fired when the dialog closes. Fires dig-confirm-canceled and dig-confirm-confirmed. Also
 		 * runs any cancelCallback or confirmCallback methods
