@@ -103,12 +103,8 @@ var NowElements;
                 }
             }
             this.$.dialog.open();
-            if (cancelCallback) {
-                this.set('_cancelCallback', cancelCallback);
-            }
-            if (confirmCallback) {
-                this.set('_confirmCallback', confirmCallback);
-            }
+            this.set('_cancelCallback', cancelCallback);
+            this.set('_confirmCallback', confirmCallback);
         }
         close() {
             this.$.dialog.close();
