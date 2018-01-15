@@ -69,6 +69,7 @@ namespace NowElements {
 		 * runs any cancelCallback or confirmCallback methods
 		 * @param  {Event} evt    The event object
 		 * @param  {Object} detail The detail object
+		 * @listens #dialog.iron-overlay-closed
 		 */
 		_onDialogClosed(evt: CustomEvent) {
 			let detail = evt.detail;
@@ -76,13 +77,13 @@ namespace NowElements {
 				if (this.get('_cancelCallback')) {
 					this.get('_cancelCallback').call(this);
 				}
-				let evt = new CustomEvent('dig-confirm-canceled');
+				let evt = new CustomEvent('now-confirm-canceled');
 				this.dispatchEvent(evt);
 			}else if (detail.confirmed) {
 				if (this.get('_confirmCallback')) {
 					this.get('_confirmCallback').call(this);
 				}
-				let evt = new CustomEvent('dig-confirm-confirmed');
+				let evt = new CustomEvent('now-confirm-confirmed');
 				this.dispatchEvent(evt);
 			}
 		}
