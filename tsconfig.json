@@ -1,7 +1,14 @@
 {
 	"compileOnSave": true,
 	"compilerOptions": {
-		"target": "es5",
+		"target": "es2016",
+		"module": "commonjs",
+		"lib": [
+			"dom",
+			"es6",
+			"dom.iterable",
+			"scripthost"
+		],
 		"noImplicitAny": false,
 		"removeComments": true,
 		"preserveConstEnums": true,
@@ -11,9 +18,14 @@
 		"noEmitOnError": true,
 		"declaration": true
 	},
+	"include": [
+		"**/*.ts",
+		"test/*.ts",
+		"test/**/*.ts",
+		"bower_components/now-core/*.d.ts",
+		"bower_components/polymer/**/*.d.ts"
+	],
 	"exclude": [
-		"node_modules",
-		"bower_components",
-		"dist"
+		"node_modules/**/*.*"
 	]
 }

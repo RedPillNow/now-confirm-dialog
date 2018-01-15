@@ -5,122 +5,64 @@ namespace NowElements {
 	 *
 	 * @author Keith Strickland
 	 */
-	@component('now-confirm-dialog')
 	export class NowConfirmDialog extends NowElements.BaseElement {
+		static get is() { return 'now-confirm-dialog'; }
+		static get properties() {
+			return {
+				dialogTitle: String,
+				dialogText: {
+					type: String,
+					observer: '_onDialogTextChange'
+				},
+				confirmButtonText: {
+					type: String,
+					value: 'OK'
+				},
+				cancelButtonText: {
+					type: String,
+					value: 'Cancel'
+				},
+				confirmButtonBackground: {
+					type: String,
+					observer: '_onConfirmBackgroundChange'
+				},
+				confirmButtonColor: {
+					type: String,
+					observer: '_onConfirmColorChange'
+				},
+				cancelButtonBackground: {
+					type: String,
+					observer: '_onCancelBackgroundChange'
+				},
+				cancelButtonColor: {
+					type: String,
+					observer: '_onCancelColorChange'
+				},
+				noCancelButton: {
+					type: Boolean,
+					value: false,
+					reflectToAttribute: true
+				},
+				_cancelCallback: Function,
+				_confirmCallback: Function,
+				targetMoveCssSelector: String,
+			};
+		}
+		get is() {
+			return NowConfirmDialog.is;
+		}
 
-		/**
-		 * The title of the dialog
-		 * @type {String}
-		 */
-		@property({
-			type: String
-		})
-		dialogTitle: string
-		/**
-		 * The text of the dialog
-		 * @type {String}
-		 */
-		@property({
-			type: String
-		})
-		dialogText: string
-		/**
-		 * The text which shows in the confirm button
-		 * @type {String}
-		 */
-		@property({
-			type: String,
-			value: 'OK'
-		})
-		confirmButtonText: string;
-		/**
-		 * The text which shows in the cancel button
-		 * @type {Stromg}
-		 */
-		@property({
-			type: String,
-			value: 'Cancel'
-		})
-		cancelButtonText: string;
-		/**
-		 * The hex color of the confirm button background
-		 * @type {String}
-		 */
-		@property({
-			type: String,
-			observer: '_onConfirmBackgroundChange'
-		})
-		confirmButtonBackground: string;
-		/**
-		 * The hex color of the confirm button text
-		 * @type {String}
-		 */
-		@property({
-			type: String,
-			observer: '_onConfirmColorChange'
-		})
-		confirmButtonColor: string;
-		/**
-		 * The hex color of the cancel button background
-		 * @type {String}
-		 */
-		@property({
-			type: String,
-			observer: '_onCancelBackgroundChange'
-		})
-		cancelButtonBackground: string;
-		/**
-		 * The hex color of the cancel button text
-		 * @type {String}
-		 */
-		@property({
-			type: String,
-			observer: '_onCancelColorChange'
-		})
-		cancelButtonColor: string;
-		/**
-		 * True if there should be no cancel button
-		 * @type {Boolean}
-		 */
-		@property({
-			type: Boolean,
-			value: false,
-			reflectToAttribute: true
-		})
-		noCancelButton: boolean;
-		/**
-		 * The callback function to run if the dialog is cancelled
-		 * @type {Function}
-		 */
-		@property({
-			type: Function
-		})
-		_cancelCallback: any;
-		/**
-		 * The callback function to run if the dialog is confirmed
-		 * @type {Function}
-		 */
-		@property({
-			type: Function
-		})
-		_confirmCallback: any;
-		/**
-		 * Define this property to move this element when opened into the element
-		 * with the provided selector. This is to ensure that the overlay
-		 * does not appear over the dialog.
-		 */
-		@property({
-			type: String
-		})
-		targetMoveCssSelector: string;
-
-		@observe('dialogText')
 		private _onDialogTextChange(dialogText) {
 			if (dialogText.indexOf('\n') > -1) {
-				this.toggleClass('preText', true, this.$.dialogText);
+				this.$.dialogText.classList.toggle('preText', true);
 			} else {
-				this.toggleClass('preText', false, this.$.dialogText);
+				this.$.dialogText.classList.toggle('preText', false);
 			}
+		}
+
+		connectedCallback() {
+			super.connectedCallback();
+			this.$.dialog.addEventListener('iron-overlay-closed', this._onDialogClosed.bind(this));
 		}
 		/**
 		 * Fired when the dialog closes. Fires dig-confirm-canceled and dig-confirm-confirmed. Also
@@ -128,18 +70,20 @@ namespace NowElements {
 		 * @param  {Event} evt    The event object
 		 * @param  {Object} detail The detail object
 		 */
-		@listen('dialog.iron-overlay-closed')
-		_onDialogClosed(evt, detail) {
+		_onDialogClosed(evt: CustomEvent) {
+			let detail = evt.detail;
 			if (!detail.confirmed) {
-				if (this._cancelCallback) {
-					this._cancelCallback.call(this);
+				if (this.get('_cancelCallback')) {
+					this.get('_cancelCallback').call(this);
 				}
-				this.fire('dig-confirm-canceled');
+				let evt = new CustomEvent('dig-confirm-canceled');
+				this.dispatchEvent(evt);
 			}else if (detail.confirmed) {
-				if (this._confirmCallback) {
-					this._confirmCallback.call(this);
+				if (this.get('_confirmCallback')) {
+					this.get('_confirmCallback').call(this);
 				}
-				this.fire('dig-confirm-confirmed');
+				let evt = new CustomEvent('dig-confirm-confirmed');
+				this.dispatchEvent(evt);
 			}
 		}
 		/**
@@ -149,8 +93,9 @@ namespace NowElements {
 		 */
 		_onConfirmBackgroundChange(newVal, oldVal) {
 			if (newVal) {
-				this.customStyle['--now-confirm-dialog-confirm-button-background'] = newVal;
-				this.updateStyles();
+				this.updateStyles({'--now-confirm-dialog-confirm-button-background': newVal});
+				// this.customStyle['--now-confirm-dialog-confirm-button-background']
+				// this.updateStyles();
 			}
 		}
 		/**
@@ -160,8 +105,9 @@ namespace NowElements {
 		 */
 		_onConfirmColorChange(newVal, oldVal) {
 			if (newVal) {
-				this.customStyle['--now-confirm-dialog-conform-button-color'] = newVal;
-				this.updateStyles();
+				this.updateStyles({'--now-confirm-dialog-conform-button-color': newVal })
+				// this.customStyle['--now-confirm-dialog-conform-button-color'] = newVal;
+				// this.updateStyles();
 			}
 		}
 		/**
@@ -171,8 +117,9 @@ namespace NowElements {
 		 */
 		_onCancelBackgroundChange(newVal, oldVal) {
 			if (newVal) {
-				this.customStyle['--now-confirm-dialog-cancel-button-background'] = newVal;
-				this.updateStyles();
+				this.updateStyles({'--now-confirm-dialog-cancel-button-background': newVal})
+				//this.customStyle['--now-confirm-dialog-cancel-button-background'] = newVal;
+				// this.updateStyles();
 			}
 		}
 		/**
@@ -183,8 +130,9 @@ namespace NowElements {
 		 */
 		_onCancelColorChange(newVal, oldVal) {
 			if (newVal) {
-				this.customStyle['--now-confirm-dialog-cancel-button-color'] = newVal;
-				this.updateStyles();
+				this.updateStyles({'--now-confirm-dialog-cancel-button-color': newVal})
+				//this.customStyle['--now-confirm-dialog-cancel-button-color'] = newVal;
+				// this.updateStyles();
 			}
 		}
 		/**
@@ -199,18 +147,18 @@ namespace NowElements {
 			// which is kind of ridiculus for a production ready platform.
 			// Luckily there really is no data binding with this component or that too
 			// would be broken.
-			if (this.targetMoveCssSelector) {
-				let elem = document.querySelector(this.targetMoveCssSelector);
+			if (this.get('targetMoveCssSelector')) {
+				let elem = document.querySelector(this.get('targetMoveCssSelector'));
 				if (elem) {
 					elem.appendChild(this);
 				}
 			}
-			this.$.dialog.open();
+			(<any>this.$.dialog).open();
 			if (cancelCallback) {
-				this._cancelCallback = cancelCallback;
+				this.set('_cancelCallback', cancelCallback);
 			}
 			if (confirmCallback) {
-				this._confirmCallback = confirmCallback;
+				this.set('_confirmCallback', confirmCallback);
 			}
 		}
 		/**
@@ -218,9 +166,9 @@ namespace NowElements {
 		 * in the iron-overlay-closed event handler
 		 */
 		close() {
-			this.$.dialog.close();
-			if (this.targetMoveCssSelector) {
-				let movedDialog = document.querySelector(this.targetMoveCssSelector + ' > now-confirm-dialog');
+			(<any>this.$.dialog).close();
+			if (this.get('targetMoveCssSelector')) {
+				let movedDialog = document.querySelector(this.get('targetMoveCssSelector') + ' > now-confirm-dialog');
 				if (movedDialog) {
 					movedDialog.parentNode.removeChild(movedDialog);
 				}
@@ -229,4 +177,5 @@ namespace NowElements {
 	}
 }
 
-NowElements.NowConfirmDialog.register();
+customElements.define(NowElements.NowConfirmDialog.is, NowElements.NowConfirmDialog);
+

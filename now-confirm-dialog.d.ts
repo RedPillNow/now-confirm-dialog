@@ -1,19 +1,49 @@
 declare namespace NowElements {
     class NowConfirmDialog extends NowElements.BaseElement {
-        dialogTitle: string;
-        dialogText: string;
-        confirmButtonText: string;
-        cancelButtonText: string;
-        confirmButtonBackground: string;
-        confirmButtonColor: string;
-        cancelButtonBackground: string;
-        cancelButtonColor: string;
-        noCancelButton: boolean;
-        _cancelCallback: any;
-        _confirmCallback: any;
-        targetMoveCssSelector: string;
+        static readonly is: string;
+        static readonly properties: {
+            dialogTitle: StringConstructor;
+            dialogText: {
+                type: StringConstructor;
+                observer: string;
+            };
+            confirmButtonText: {
+                type: StringConstructor;
+                value: string;
+            };
+            cancelButtonText: {
+                type: StringConstructor;
+                value: string;
+            };
+            confirmButtonBackground: {
+                type: StringConstructor;
+                observer: string;
+            };
+            confirmButtonColor: {
+                type: StringConstructor;
+                observer: string;
+            };
+            cancelButtonBackground: {
+                type: StringConstructor;
+                observer: string;
+            };
+            cancelButtonColor: {
+                type: StringConstructor;
+                observer: string;
+            };
+            noCancelButton: {
+                type: BooleanConstructor;
+                value: boolean;
+                reflectToAttribute: boolean;
+            };
+            _cancelCallback: FunctionConstructor;
+            _confirmCallback: FunctionConstructor;
+            targetMoveCssSelector: StringConstructor;
+        };
+        readonly is: string;
         private _onDialogTextChange(dialogText);
-        _onDialogClosed(evt: any, detail: any): void;
+        connectedCallback(): void;
+        _onDialogClosed(evt: CustomEvent): void;
         _onConfirmBackgroundChange(newVal: any, oldVal: any): void;
         _onConfirmColorChange(newVal: any, oldVal: any): void;
         _onCancelBackgroundChange(newVal: any, oldVal: any): void;

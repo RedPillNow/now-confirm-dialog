@@ -1,172 +1,127 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 var NowElements;
 (function (NowElements) {
-    var NowConfirmDialog = (function (_super) {
-        __extends(NowConfirmDialog, _super);
-        function NowConfirmDialog() {
-            _super.apply(this, arguments);
+    class NowConfirmDialog extends NowElements.BaseElement {
+        static get is() { return 'now-confirm-dialog'; }
+        static get properties() {
+            return {
+                dialogTitle: String,
+                dialogText: {
+                    type: String,
+                    observer: '_onDialogTextChange'
+                },
+                confirmButtonText: {
+                    type: String,
+                    value: 'OK'
+                },
+                cancelButtonText: {
+                    type: String,
+                    value: 'Cancel'
+                },
+                confirmButtonBackground: {
+                    type: String,
+                    observer: '_onConfirmBackgroundChange'
+                },
+                confirmButtonColor: {
+                    type: String,
+                    observer: '_onConfirmColorChange'
+                },
+                cancelButtonBackground: {
+                    type: String,
+                    observer: '_onCancelBackgroundChange'
+                },
+                cancelButtonColor: {
+                    type: String,
+                    observer: '_onCancelColorChange'
+                },
+                noCancelButton: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true
+                },
+                _cancelCallback: Function,
+                _confirmCallback: Function,
+                targetMoveCssSelector: String,
+            };
         }
-        NowConfirmDialog.prototype._onDialogTextChange = function (dialogText) {
+        get is() {
+            return NowConfirmDialog.is;
+        }
+        _onDialogTextChange(dialogText) {
             if (dialogText.indexOf('\n') > -1) {
-                this.toggleClass('preText', true, this.$.dialogText);
+                this.$.dialogText.classList.toggle('preText', true);
             }
             else {
-                this.toggleClass('preText', false, this.$.dialogText);
+                this.$.dialogText.classList.toggle('preText', false);
             }
-        };
-        NowConfirmDialog.prototype._onDialogClosed = function (evt, detail) {
+        }
+        connectedCallback() {
+            super.connectedCallback();
+            this.$.dialog.addEventListener('iron-overlay-closed', this._onDialogClosed.bind(this));
+        }
+        _onDialogClosed(evt) {
+            let detail = evt.detail;
             if (!detail.confirmed) {
-                if (this._cancelCallback) {
-                    this._cancelCallback.call(this);
+                if (this.get('_cancelCallback')) {
+                    this.get('_cancelCallback').call(this);
                 }
-                this.fire('dig-confirm-canceled');
+                let evt = new CustomEvent('dig-confirm-canceled');
+                this.dispatchEvent(evt);
             }
             else if (detail.confirmed) {
-                if (this._confirmCallback) {
-                    this._confirmCallback.call(this);
+                if (this.get('_confirmCallback')) {
+                    this.get('_confirmCallback').call(this);
                 }
-                this.fire('dig-confirm-confirmed');
+                let evt = new CustomEvent('dig-confirm-confirmed');
+                this.dispatchEvent(evt);
             }
-        };
-        NowConfirmDialog.prototype._onConfirmBackgroundChange = function (newVal, oldVal) {
+        }
+        _onConfirmBackgroundChange(newVal, oldVal) {
             if (newVal) {
-                this.customStyle['--now-confirm-dialog-confirm-button-background'] = newVal;
-                this.updateStyles();
+                this.updateStyles({ '--now-confirm-dialog-confirm-button-background': newVal });
             }
-        };
-        NowConfirmDialog.prototype._onConfirmColorChange = function (newVal, oldVal) {
+        }
+        _onConfirmColorChange(newVal, oldVal) {
             if (newVal) {
-                this.customStyle['--now-confirm-dialog-conform-button-color'] = newVal;
-                this.updateStyles();
+                this.updateStyles({ '--now-confirm-dialog-conform-button-color': newVal });
             }
-        };
-        NowConfirmDialog.prototype._onCancelBackgroundChange = function (newVal, oldVal) {
+        }
+        _onCancelBackgroundChange(newVal, oldVal) {
             if (newVal) {
-                this.customStyle['--now-confirm-dialog-cancel-button-background'] = newVal;
-                this.updateStyles();
+                this.updateStyles({ '--now-confirm-dialog-cancel-button-background': newVal });
             }
-        };
-        NowConfirmDialog.prototype._onCancelColorChange = function (newVal, oldVal) {
+        }
+        _onCancelColorChange(newVal, oldVal) {
             if (newVal) {
-                this.customStyle['--now-confirm-dialog-cancel-button-color'] = newVal;
-                this.updateStyles();
+                this.updateStyles({ '--now-confirm-dialog-cancel-button-color': newVal });
             }
-        };
-        NowConfirmDialog.prototype.open = function (confirmCallback, cancelCallback) {
-            if (this.targetMoveCssSelector) {
-                var elem = document.querySelector(this.targetMoveCssSelector);
+        }
+        open(confirmCallback, cancelCallback) {
+            if (this.get('targetMoveCssSelector')) {
+                let elem = document.querySelector(this.get('targetMoveCssSelector'));
                 if (elem) {
                     elem.appendChild(this);
                 }
             }
             this.$.dialog.open();
             if (cancelCallback) {
-                this._cancelCallback = cancelCallback;
+                this.set('_cancelCallback', cancelCallback);
             }
             if (confirmCallback) {
-                this._confirmCallback = confirmCallback;
+                this.set('_confirmCallback', confirmCallback);
             }
-        };
-        NowConfirmDialog.prototype.close = function () {
+        }
+        close() {
             this.$.dialog.close();
-            if (this.targetMoveCssSelector) {
-                var movedDialog = document.querySelector(this.targetMoveCssSelector + ' > now-confirm-dialog');
+            if (this.get('targetMoveCssSelector')) {
+                let movedDialog = document.querySelector(this.get('targetMoveCssSelector') + ' > now-confirm-dialog');
                 if (movedDialog) {
                     movedDialog.parentNode.removeChild(movedDialog);
                 }
             }
-        };
-        __decorate([
-            property({
-                type: String
-            })
-        ], NowConfirmDialog.prototype, "dialogTitle", void 0);
-        __decorate([
-            property({
-                type: String
-            })
-        ], NowConfirmDialog.prototype, "dialogText", void 0);
-        __decorate([
-            property({
-                type: String,
-                value: 'OK'
-            })
-        ], NowConfirmDialog.prototype, "confirmButtonText", void 0);
-        __decorate([
-            property({
-                type: String,
-                value: 'Cancel'
-            })
-        ], NowConfirmDialog.prototype, "cancelButtonText", void 0);
-        __decorate([
-            property({
-                type: String,
-                observer: '_onConfirmBackgroundChange'
-            })
-        ], NowConfirmDialog.prototype, "confirmButtonBackground", void 0);
-        __decorate([
-            property({
-                type: String,
-                observer: '_onConfirmColorChange'
-            })
-        ], NowConfirmDialog.prototype, "confirmButtonColor", void 0);
-        __decorate([
-            property({
-                type: String,
-                observer: '_onCancelBackgroundChange'
-            })
-        ], NowConfirmDialog.prototype, "cancelButtonBackground", void 0);
-        __decorate([
-            property({
-                type: String,
-                observer: '_onCancelColorChange'
-            })
-        ], NowConfirmDialog.prototype, "cancelButtonColor", void 0);
-        __decorate([
-            property({
-                type: Boolean,
-                value: false,
-                reflectToAttribute: true
-            })
-        ], NowConfirmDialog.prototype, "noCancelButton", void 0);
-        __decorate([
-            property({
-                type: Function
-            })
-        ], NowConfirmDialog.prototype, "_cancelCallback", void 0);
-        __decorate([
-            property({
-                type: Function
-            })
-        ], NowConfirmDialog.prototype, "_confirmCallback", void 0);
-        __decorate([
-            property({
-                type: String
-            })
-        ], NowConfirmDialog.prototype, "targetMoveCssSelector", void 0);
-        __decorate([
-            observe('dialogText')
-        ], NowConfirmDialog.prototype, "_onDialogTextChange", null);
-        __decorate([
-            listen('dialog.iron-overlay-closed')
-        ], NowConfirmDialog.prototype, "_onDialogClosed", null);
-        NowConfirmDialog = __decorate([
-            component('now-confirm-dialog')
-        ], NowConfirmDialog);
-        return NowConfirmDialog;
-    }(NowElements.BaseElement));
+        }
+    }
     NowElements.NowConfirmDialog = NowConfirmDialog;
 })(NowElements || (NowElements = {}));
-NowElements.NowConfirmDialog.register();
+customElements.define(NowElements.NowConfirmDialog.is, NowElements.NowConfirmDialog);
 
 //# sourceMappingURL=now-confirm-dialog.js.map
