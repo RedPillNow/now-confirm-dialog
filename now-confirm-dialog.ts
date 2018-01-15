@@ -155,12 +155,12 @@ namespace NowElements {
 				}
 			}
 			(<any>this.$.dialog).open();
-			if (cancelCallback) {
+			//if (cancelCallback) {
 				this.set('_cancelCallback', cancelCallback);
-			}
-			if (confirmCallback) {
+			//}
+			//if (confirmCallback) {
 				this.set('_confirmCallback', confirmCallback);
-			}
+			//}
 		}
 		/**
 		 * Closes the dialog. Will cause the cancel callback to be run
