@@ -5,7 +5,7 @@ namespace NowElements {
 	 *
 	 * @author Keith Strickland
 	 */
-	export class NowConfirmDialog extends NowElements.BaseElement {
+	export class NowConfirmDialog extends Polymer.Element {
 		static get is() { return 'now-confirm-dialog'; }
 		static get properties() {
 			return {

@@ -1,5 +1,5 @@
 declare namespace NowElements {
-    class NowConfirmDialog extends NowElements.BaseElement {
+    class NowConfirmDialog extends Polymer.Element {
         static readonly is: string;
         static readonly properties: {
             dialogTitle: StringConstructor;

@@ -1,6 +1,6 @@
 var NowElements;
 (function (NowElements) {
-    class NowConfirmDialog extends NowElements.BaseElement {
+    class NowConfirmDialog extends Polymer.Element {
         static get is() { return 'now-confirm-dialog'; }
         static get properties() {
             return {
