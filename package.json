@@ -1,10 +1,11 @@
 {
   "name": "now-confirm-dialog",
   "version": "2.0.0",
-  "description": "Confirmation Dialog",
+  "description": "Confirmation Dialog which closely mimics JavaScript confirm command",
   "engines": {
     "node": ">=4.0"
   },
+  "license": "Apache-2.0",
   "private": true,
   "devDependencies": {
     "@types/chai": "^4.0.4",
