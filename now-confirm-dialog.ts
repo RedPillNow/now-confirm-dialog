@@ -52,17 +52,26 @@ namespace NowElements {
 			return NowConfirmDialog.is;
 		}
 
+		_closeDialogListener: any;
+		connectedCallback() {
+			super.connectedCallback();
+			this._closeDialogListener = this._onDialogClosed.bind(this);
+			this.$.dialog.addEventListener('iron-overlay-closed', this._closeDialogListener);
+		}
+		disconnectedCallback() {
+			this.$.dialog.removeEventListener('iron-overlay-closed', this._closeDialogListener);
+		}
+		/**
+		 * Fired when the dialogText property changes
+		 * @private
+		 * @param {string} dialogText
+		 */
 		private _onDialogTextChange(dialogText) {
 			if (dialogText.indexOf('\n') > -1) {
 				this.$.dialogText.classList.toggle('preText', true);
 			} else {
 				this.$.dialogText.classList.toggle('preText', false);
 			}
-		}
-
-		connectedCallback() {
-			super.connectedCallback();
-			this.$.dialog.addEventListener('iron-overlay-closed', this._onDialogClosed.bind(this));
 		}
 		/**
 		 * Fired when the dialog closes. Fires dig-confirm-canceled and dig-confirm-confirmed. Also
@@ -71,7 +80,7 @@ namespace NowElements {
 		 * @param  {Object} detail The detail object
 		 * @listens #dialog.iron-overlay-closed
 		 */
-		_onDialogClosed(evt: CustomEvent) {
+		private _onDialogClosed(evt: CustomEvent) {
 			let detail = evt.detail;
 			if (!detail.confirmed) {
 				if (this.get('_cancelCallback')) {
@@ -92,11 +101,9 @@ namespace NowElements {
 		 * @param  {String} newVal The new color
 		 * @param  {String} oldVal The old color
 		 */
-		_onConfirmBackgroundChange(newVal, oldVal) {
+		private _onConfirmBackgroundChange(newVal, oldVal) {
 			if (newVal) {
 				this.updateStyles({'--now-confirm-dialog-confirm-button-background': newVal});
-				// this.customStyle['--now-confirm-dialog-confirm-button-background']
-				// this.updateStyles();
 			}
 		}
 		/**
@@ -104,11 +111,9 @@ namespace NowElements {
 		 * @param  {String} newVal The new color
 		 * @param  {String} oldVal The old color
 		 */
-		_onConfirmColorChange(newVal, oldVal) {
+		private _onConfirmColorChange(newVal, oldVal) {
 			if (newVal) {
 				this.updateStyles({'--now-confirm-dialog-conform-button-color': newVal })
-				// this.customStyle['--now-confirm-dialog-conform-button-color'] = newVal;
-				// this.updateStyles();
 			}
 		}
 		/**
@@ -116,11 +121,9 @@ namespace NowElements {
 		 * @param  {String} newVal The new color
 		 * @param  {String} oldVal The old color
 		 */
-		_onCancelBackgroundChange(newVal, oldVal) {
+		private _onCancelBackgroundChange(newVal, oldVal) {
 			if (newVal) {
 				this.updateStyles({'--now-confirm-dialog-cancel-button-background': newVal})
-				//this.customStyle['--now-confirm-dialog-cancel-button-background'] = newVal;
-				// this.updateStyles();
 			}
 		}
 		/**
@@ -129,11 +132,9 @@ namespace NowElements {
 		 * @param  {String} oldVal The old color
 		 * @return {[type]}        [description]
 		 */
-		_onCancelColorChange(newVal, oldVal) {
+		private _onCancelColorChange(newVal, oldVal) {
 			if (newVal) {
 				this.updateStyles({'--now-confirm-dialog-cancel-button-color': newVal})
-				//this.customStyle['--now-confirm-dialog-cancel-button-color'] = newVal;
-				// this.updateStyles();
 			}
 		}
 		/**
@@ -155,12 +156,8 @@ namespace NowElements {
 				}
 			}
 			(<any>this.$.dialog).open();
-			//if (cancelCallback) {
-				this.set('_cancelCallback', cancelCallback);
-			//}
-			//if (confirmCallback) {
-				this.set('_confirmCallback', confirmCallback);
-			//}
+			this.set('_cancelCallback', cancelCallback);
+			this.set('_confirmCallback', confirmCallback);
 		}
 		/**
 		 * Closes the dialog. Will cause the cancel callback to be run

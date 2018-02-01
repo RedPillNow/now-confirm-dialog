@@ -41,13 +41,15 @@ declare namespace NowElements {
             targetMoveCssSelector: StringConstructor;
         };
         readonly is: string;
-        private _onDialogTextChange(dialogText);
+        _closeDialogListener: any;
         connectedCallback(): void;
-        _onDialogClosed(evt: CustomEvent): void;
-        _onConfirmBackgroundChange(newVal: any, oldVal: any): void;
-        _onConfirmColorChange(newVal: any, oldVal: any): void;
-        _onCancelBackgroundChange(newVal: any, oldVal: any): void;
-        _onCancelColorChange(newVal: any, oldVal: any): void;
+        disconnectedCallback(): void;
+        private _onDialogTextChange(dialogText);
+        private _onDialogClosed(evt);
+        private _onConfirmBackgroundChange(newVal, oldVal);
+        private _onConfirmColorChange(newVal, oldVal);
+        private _onCancelBackgroundChange(newVal, oldVal);
+        private _onCancelColorChange(newVal, oldVal);
         open(confirmCallback: any, cancelCallback: any): void;
         close(): void;
     }

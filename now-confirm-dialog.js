@@ -46,6 +46,14 @@ var NowElements;
         get is() {
             return NowConfirmDialog.is;
         }
+        connectedCallback() {
+            super.connectedCallback();
+            this._closeDialogListener = this._onDialogClosed.bind(this);
+            this.$.dialog.addEventListener('iron-overlay-closed', this._closeDialogListener);
+        }
+        disconnectedCallback() {
+            this.$.dialog.removeEventListener('iron-overlay-closed', this._closeDialogListener);
+        }
         _onDialogTextChange(dialogText) {
             if (dialogText.indexOf('\n') > -1) {
                 this.$.dialogText.classList.toggle('preText', true);
@@ -53,10 +61,6 @@ var NowElements;
             else {
                 this.$.dialogText.classList.toggle('preText', false);
             }
-        }
-        connectedCallback() {
-            super.connectedCallback();
-            this.$.dialog.addEventListener('iron-overlay-closed', this._onDialogClosed.bind(this));
         }
         _onDialogClosed(evt) {
             let detail = evt.detail;
