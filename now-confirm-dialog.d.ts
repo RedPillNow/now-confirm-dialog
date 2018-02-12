@@ -1,4 +1,16 @@
 declare namespace NowElements {
+    type ConfirmDialogConfig = {
+        dialogTitle: string;
+        dialogText: string;
+        confirmButtonText?: string;
+        cancelButtonText?: string;
+        confirmCallback?: any;
+        cancelCallback?: any;
+        confirmButtonBackground?: string;
+        confirmButtonColor?: string;
+        cancelButtonBackground?: string;
+        noCancelButton?: boolean;
+    };
     class NowConfirmDialog extends Polymer.Element {
         static readonly is: string;
         static readonly properties: {

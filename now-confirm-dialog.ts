@@ -1,4 +1,20 @@
 namespace NowElements {
+	/**
+	 * Type representing details expected when firing a Zion.EventHelpers.open_confirm event.
+	 * Steps for opening a dialog:
+	 */
+	export type ConfirmDialogConfig = {
+		dialogTitle: string;
+		dialogText: string;
+		confirmButtonText?: string;
+		cancelButtonText?: string;
+		confirmCallback?: any;
+		cancelCallback?: any;
+		confirmButtonBackground?: string;
+		confirmButtonColor?: string;
+		cancelButtonBackground?: string;
+		noCancelButton?: boolean;
+	};
 
 	/**
 	 * Confirmation dialog for use in Red Pill Now apps
