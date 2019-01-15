@@ -1,16 +1,28 @@
 <!doctype html>
 <html>
 <head>
-	<title>now-starter-element demo</title>
+	<title>now-confirm-dialg demo</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-	<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-
-	<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-	<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-	<link rel="import" href="../../paper-button/paper-button.html">
-
-	<link rel="import" href="../now-confirm-dialog.html">
+	<!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2.0.0/webcomponents-loader.js"></script> -->
+	<script>
+		const _customElementsDefine = window.customElements.define;
+		window.customElements.define = (name, cl, conf) => {
+			if (!customElements.get(name)) {
+				_customElementsDefine.call(window.customElements, name, cl, conf);
+			}
+			else {
+				console.warn(`${name} has been defined twice`);
+			}
+		};
+	</script>
+	<script type="module">
+		import '@polymer/iron-demo-helpers/demo-snippet';
+		import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
+		import '@polymer/paper-button/paper-button';
+		import '@polymer/paper-styles/typography';
+		import '../now-confirm-dialog';
+	</script>
 
 	<style is="custom-style" include="demo-pages-shared-styles">
 		#mainDiv {
@@ -20,109 +32,95 @@
 	</style>
 </head>
 <body>
-<span id="browser-sync-binding"></span>
-<div id="mainDiv" class="vertical-section-container centered">
+	<div id="mainDiv" class="vertical-section-container centered">
 
-	<h3>Basic now-confirm-dialog Demo</h3>
-	<demo-snippet>
-		<template>
-			<now-confirm-dialog
-				id="basic"
-				dialog-title="Basic Confirmation Dialog Title"
-				dialog-text="Here is some text for the dialog. Yes?">
-			</now-confirm-dialog>
-			<paper-button id="basicButton">Open Basic Confirm Dialog</paper-button>
-			<script>
-				var button = document.querySelector('#basicButton').addEventListener('click', function() {
-					var confirmCallback = function() {
-						alert('Dialog Confirmed!');
-					}
-					var cancelCallback = function() {
-						alert('Dialog Cancelled!');
-					}
-					var dialog = document.querySelector('#basic');
-					dialog.open(confirmCallback, cancelCallback);
-				});
-			</script>
-		</template>
-	</demo-snippet>
+		<h3>Basic now-confirm-dialog Demo</h3>
+		<demo-snippet>
+			<template>
+				<now-confirm-dialog id="basic" dialog-title="Basic Confirmation Dialog Title" dialog-text="Here is some text for the dialog. Yes?">
+				</now-confirm-dialog>
+				<paper-button id="basicButton">Open Basic Confirm Dialog</paper-button>
+				<script>
+					var button = document.querySelector('#basicButton').addEventListener('click', function () {
+						var confirmCallback = function () {
+							alert('Dialog Confirmed!');
+						}
+						var cancelCallback = function () {
+							alert('Dialog Cancelled!');
+						}
+						var dialog = document.querySelector('#basic');
+						console.log('dialog=', dialog);
+						dialog.open(confirmCallback, cancelCallback);
+					});
+				</script>
+			</template>
+		</demo-snippet>
 
-	<h3>Custom colors and Dynamic Text now-confirm-dialog Demo</h3>
-	<demo-snippet>
-		<template>
-			<now-confirm-dialog
-				id="customText"
-				confirm-button-background="purple"
-				confirm-button-color="black"
-				cancel-button-background="pink"
-				cancel-button-color="black">
-			</now-confirm-dialog>
-			<paper-button id="customColorButton">Open Custom Color and Text Confirm Dialog</paper-button>
-			<script>
-				var dialog = document.querySelector('#customText');
-				dialog.dialogTitle = "Title set with JavaScript";
-				var computed = 'computed';
-				dialog.dialogText = 'This text was dynamically ' + computed + '. Should have a purple confirm button and pink cancel button.';
-				var button = document.querySelector('#customColorButton').addEventListener('click', function() {
-					var confirmCallback = function() {
-						alert('Dialog Confirmed!');
-					}
-					var cancelCallback = function() {
-						alert('Dialog Cancelled!');
-					}
-					dialog.open(confirmCallback, cancelCallback);
-				});
-			</script>
-		</template>
-	</demo-snippet>
+		<h3>Custom colors and Dynamic Text now-confirm-dialog Demo</h3>
+		<demo-snippet>
+			<template>
+				<now-confirm-dialog id="customText" confirm-button-background="purple" confirm-button-color="black"
+				 cancel-button-background="pink" cancel-button-color="black">
+				</now-confirm-dialog>
+				<paper-button id="customColorButton">Open Custom Color and Text Confirm Dialog</paper-button>
+				<script>
+					var dialog = document.querySelector('#customText');
+					dialog.dialogTitle = "Title set with JavaScript";
+					var computed = 'computed';
+					dialog.dialogText = 'This text was dynamically ' + computed + '. Should have a purple confirm button and pink cancel button.';
+					var button = document.querySelector('#customColorButton').addEventListener('click', function () {
+						var confirmCallback = function () {
+							alert('Dialog Confirmed!');
+						}
+						var cancelCallback = function () {
+							alert('Dialog Cancelled!');
+						}
+						dialog.open(confirmCallback, cancelCallback);
+					});
+				</script>
+			</template>
+		</demo-snippet>
 
-	<h3>Custom Buttons now-confirm-dialog Demo</h3>
-	<demo-snippet>
-		<template>
-			<now-confirm-dialog
-				id="customButtons"
-				cancel-button-text="Nope"
-				confirm-button-text="Yup"
-				dialog-title="Custom button text"
-				dialog-text="The cancel and confirm buttons should have custom text">
-			</now-confirm-dialog>
-			<paper-button id="customButtonsButton">Open Custom Buttons Confirm Dialog</paper-button>
-			<script>
-				var button = document.querySelector('#customButtonsButton').addEventListener('click', function() {
-					var dialog = document.querySelector('#customButtons');
-					var confirmCallback = function() {
-						alert('Dialog Confirmed!');
-					}
-					var cancelCallback = function() {
-						alert('Dialog Cancelled!');
-					}
-					dialog.open(confirmCallback, cancelCallback);
-				});
-			</script>
-		</template>
-	</demo-snippet>
+		<h3>Custom Buttons now-confirm-dialog Demo</h3>
+		<demo-snippet>
+			<template>
+				<now-confirm-dialog id="customButtons" cancel-button-text="Nope" confirm-button-text="Yup" dialog-title="Custom button text"
+				 dialog-text="The cancel and confirm buttons should have custom text">
+				</now-confirm-dialog>
+				<paper-button id="customButtonsButton">Open Custom Buttons Confirm Dialog</paper-button>
+				<script>
+					var button = document.querySelector('#customButtonsButton').addEventListener('click', function () {
+						var dialog = document.querySelector('#customButtons');
+						var confirmCallback = function () {
+							alert('Dialog Confirmed!');
+						}
+						var cancelCallback = function () {
+							alert('Dialog Cancelled!');
+						}
+						dialog.open(confirmCallback, cancelCallback);
+					});
+				</script>
+			</template>
+		</demo-snippet>
 
-	<h3>No Cancel Button now-confirm-dialog Demo</h3>
-	<demo-snippet>
-		<template>
-			<now-confirm-dialog
-				id="noCancelButton"
-				dialog-title="No Cancel Button Dialog"
-				dialog-text="There should be no cancel button"
-				no-cancel-button>
-			</now-confirm-dialog>
-			<paper-button id="noCancelButtonButton">Open Confirm Dialog No Cancel Button</paper-button>
-			<script>
-				var button = document.querySelector('#noCancelButtonButton').addEventListener('click', function() {
-					var dialog = document.querySelector('#noCancelButton');
-					var confirmCallback = function() {
-						alert('Dialog Confirmed!');
-					}
-					dialog.open(confirmCallback, null);
-				});
-			</script>
-		</template>
-	</demo-snippet>
-</div>
+		<h3>No Cancel Button now-confirm-dialog Demo</h3>
+		<demo-snippet>
+			<template>
+				<now-confirm-dialog id="noCancelButton" dialog-title="No Cancel Button Dialog" dialog-text="There should be no cancel button"
+				 no-cancel-button>
+				</now-confirm-dialog>
+				<paper-button id="noCancelButtonButton">Open Confirm Dialog No Cancel Button</paper-button>
+				<script>
+					var button = document.querySelector('#noCancelButtonButton').addEventListener('click', function () {
+						var dialog = document.querySelector('#noCancelButton');
+						var confirmCallback = function () {
+							alert('Dialog Confirmed!');
+						}
+						dialog.open(confirmCallback, null);
+					});
+				</script>
+			</template>
+		</demo-snippet>
+	</div>
 </body>
 </html>

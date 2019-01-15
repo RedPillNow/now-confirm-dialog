@@ -1,68 +1,43 @@
-declare namespace NowElements {
-    type ConfirmDialogConfig = {
-        dialogTitle: string;
-        dialogText: string;
-        confirmButtonText?: string;
-        cancelButtonText?: string;
-        confirmCallback?: any;
-        cancelCallback?: any;
-        confirmButtonBackground?: string;
-        confirmButtonColor?: string;
-        cancelButtonBackground?: string;
-        noCancelButton?: boolean;
-    };
-    class NowConfirmDialog extends Polymer.Element {
-        static readonly is: string;
-        static readonly properties: {
-            dialogTitle: StringConstructor;
-            dialogText: {
-                type: StringConstructor;
-                observer: string;
-            };
-            confirmButtonText: {
-                type: StringConstructor;
-                value: string;
-            };
-            cancelButtonText: {
-                type: StringConstructor;
-                value: string;
-            };
-            confirmButtonBackground: {
-                type: StringConstructor;
-                observer: string;
-            };
-            confirmButtonColor: {
-                type: StringConstructor;
-                observer: string;
-            };
-            cancelButtonBackground: {
-                type: StringConstructor;
-                observer: string;
-            };
-            cancelButtonColor: {
-                type: StringConstructor;
-                observer: string;
-            };
-            noCancelButton: {
-                type: BooleanConstructor;
-                value: boolean;
-                reflectToAttribute: boolean;
-            };
-            _cancelCallback: FunctionConstructor;
-            _confirmCallback: FunctionConstructor;
-            targetMoveCssSelector: StringConstructor;
-        };
-        readonly is: string;
-        _closeDialogListener: any;
-        connectedCallback(): void;
-        disconnectedCallback(): void;
-        private _onDialogTextChange(dialogText);
-        private _onDialogClosed(evt);
-        private _onConfirmBackgroundChange(newVal, oldVal);
-        private _onConfirmColorChange(newVal, oldVal);
-        private _onCancelBackgroundChange(newVal, oldVal);
-        private _onCancelColorChange(newVal, oldVal);
-        open(confirmCallback: any, cancelCallback: any): void;
-        close(): void;
-    }
+import { PolymerElement } from '@polymer/polymer/polymer-element';
+import '@polymer/paper-dialog/paper-dialog';
+import '@polymer/paper-button/paper-button';
+export interface ConfirmDialogConfig {
+    dialogTitle: string;
+    dialogText: string;
+    confirmButtonText?: string;
+    cancelButtonText?: string;
+    confirmCallback?: any;
+    cancelCallback?: any;
+    confirmButtonBackground?: string;
+    confirmButtonColor?: string;
+    cancelButtonBackground?: string;
+    noCancelButton?: boolean;
+}
+export declare class NowConfirmDialog extends PolymerElement {
+    static is: string;
+    readonly is: string;
+    dialogTitle: string;
+    dialogText: string;
+    confirmButtonText: string;
+    cancelButtonText: string;
+    confirmButtonBackground: string;
+    confirmButtonColor: string;
+    cancelButtonBackground: string;
+    cancelButtonColor: string;
+    noCancelButton: boolean;
+    targetMoveCssSelector: string;
+    _cancelCallback: any;
+    _confirmCallback: any;
+    private _closeDialogListener;
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    private _onDialogTextChange;
+    private _onDialogClosed;
+    private _onConfirmBackgroundChange;
+    private _onConfirmColorChange;
+    private _onCancelBackgroundChange;
+    private _onCancelColorChange;
+    open(confirmCallback: any, cancelCallback: any): void;
+    close(): void;
+    static readonly template: HTMLTemplateElement;
 }
