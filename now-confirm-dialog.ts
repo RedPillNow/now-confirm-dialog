@@ -223,6 +223,7 @@ export class NowConfirmDialog extends PolymerElement {
 				@apply --now-confirm-dialog;
 			}
 			h2 {
+				padding: 0 15px;
 				@apply --now-confirm-dialog-header;
 			}
 			.cancelButton {
