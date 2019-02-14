@@ -7,6 +7,8 @@ module.exports = {
 		path: path.resolve(__dirname),
 		publicPath: './'
 	},
+	target: 'node',
+	devtool: 'source-map',
 	mode: 'development',
 	resolve: {
 		extensions: ['.ts', '.js', '.json']
