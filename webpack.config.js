@@ -1,4 +1,7 @@
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const proxyHost = 'http://shiva.redpillnow.com';
 
 module.exports = {
 	entry: './now-confirm-dialog.ts',
@@ -27,5 +30,29 @@ module.exports = {
 				}]
 			}
 		]
+	},
+	plugins: [new CleanWebpackPlugin(['./'])],
+	devServer: {
+		contentBase: './',
+		https: false,
+		proxy: {
+			cookieDomainRewrite: proxyHost,
+			'/api': {
+				target: proxyHost,
+				secure: false
+			},
+			'/names.nsf': {
+				target: proxyHost,
+				secure: false
+			},
+			'/redpill/digaconf.nsf': {
+				target: proxyHost,
+				secure: false
+			},
+			'/redpill/update.nsf': {
+				target: proxyHost,
+				secure: false
+			}
+		}
 	}
 };

@@ -1,11 +1,11 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-	<title>now-confirm-dialg demo</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-	<!-- <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2.0.0/webcomponents-loader.js"></script> -->
-	<script>
+
+	<title>now-confirm-dialg demo</title>
+	<!-- <script>
 		const _customElementsDefine = window.customElements.define;
 		window.customElements.define = (name, cl, conf) => {
 			if (!customElements.get(name)) {
@@ -15,14 +15,11 @@
 				console.warn(`${name} has been defined twice`);
 			}
 		};
-	</script>
-	<script type="module">
-		import '@polymer/iron-demo-helpers/demo-snippet';
-		import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
-		import '@polymer/paper-button/paper-button';
-		import '@polymer/paper-styles/typography';
-		import '../now-confirm-dialog';
-	</script>
+	</script> -->
+
+	<script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+	<script type="module" src="../now-confirm-dialog.js"></script>
 
 	<style is="custom-style" include="demo-pages-shared-styles">
 		#mainDiv {
@@ -35,8 +32,8 @@
 	<div id="mainDiv" class="vertical-section-container centered">
 
 		<h3>Basic now-confirm-dialog Demo</h3>
-		<demo-snippet>
-			<template>
+		<!-- <demo-snippet>
+			<template> -->
 				<now-confirm-dialog id="basic" dialog-title="Basic Confirmation Dialog Title" dialog-text="Here is some text for the dialog. Yes?">
 				</now-confirm-dialog>
 				<paper-button id="basicButton">Open Basic Confirm Dialog</paper-button>
@@ -53,12 +50,12 @@
 						dialog.open(confirmCallback, cancelCallback);
 					});
 				</script>
-			</template>
-		</demo-snippet>
+			<!-- </template>
+		</demo-snippet> -->
 
 		<h3>Custom colors and Dynamic Text now-confirm-dialog Demo</h3>
-		<demo-snippet>
-			<template>
+		<!-- <demo-snippet>
+			<template> -->
 				<now-confirm-dialog id="customText" confirm-button-background="purple" confirm-button-color="black"
 				 cancel-button-background="pink" cancel-button-color="black">
 				</now-confirm-dialog>
@@ -78,12 +75,12 @@
 						dialog.open(confirmCallback, cancelCallback);
 					});
 				</script>
-			</template>
-		</demo-snippet>
+			<!-- </template>
+		</demo-snippet> -->
 
 		<h3>Custom Buttons now-confirm-dialog Demo</h3>
-		<demo-snippet>
-			<template>
+		<!-- <demo-snippet>
+			<template> -->
 				<now-confirm-dialog id="customButtons" cancel-button-text="Nope" confirm-button-text="Yup" dialog-title="Custom button text"
 				 dialog-text="The cancel and confirm buttons should have custom text">
 				</now-confirm-dialog>
@@ -100,12 +97,12 @@
 						dialog.open(confirmCallback, cancelCallback);
 					});
 				</script>
-			</template>
-		</demo-snippet>
+			<!-- </template>
+		</demo-snippet> -->
 
 		<h3>No Cancel Button now-confirm-dialog Demo</h3>
-		<demo-snippet>
-			<template>
+		<!-- <demo-snippet>
+			<template> -->
 				<now-confirm-dialog id="noCancelButton" dialog-title="No Cancel Button Dialog" dialog-text="There should be no cancel button"
 				 no-cancel-button>
 				</now-confirm-dialog>
@@ -119,8 +116,8 @@
 						dialog.open(confirmCallback, null);
 					});
 				</script>
-			</template>
-		</demo-snippet>
+			<!-- </template>
+		</demo-snippet> -->
 	</div>
 </body>
 </html>
