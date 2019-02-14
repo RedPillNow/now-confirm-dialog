@@ -24047,7 +24047,6 @@ var NowConfirmDialog_1;
 
 
 
-;
 let NowConfirmDialog = NowConfirmDialog_1 = class NowConfirmDialog extends _polymer_polymer_polymer_element__WEBPACK_IMPORTED_MODULE_0__["PolymerElement"] {
     constructor() {
         super(...arguments);

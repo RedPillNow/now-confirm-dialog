@@ -14,13 +14,8 @@ export interface ConfirmDialogConfig {
 	confirmButtonColor?: string;
 	cancelButtonBackground?: string;
 	noCancelButton?: boolean;
-};
+}
 
-/**
- * Confirmation dialog for use in Red Pill Now apps
- *
- * @author Keith Strickland
- */
 @customElement('now-confirm-dialog')
 export class NowConfirmDialog extends PolymerElement {
 	static is = 'now-confirm-dialog';
