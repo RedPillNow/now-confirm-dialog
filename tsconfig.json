@@ -1,9 +1,8 @@
 {
 	"compileOnSave": true,
 	"compilerOptions": {
-		"rootDir": "./",
-		"target": "es2015",
-		"module": "es2015",
+		"target": "es6",
+		"module": "esNext",
 		"moduleResolution": "node",
 		"lib": [
 			"dom",
@@ -11,10 +10,6 @@
 			"dom.iterable",
 			"scripthost"
 		],
-		"typeRoots": [
-			"node_modules/@types"
-		],
-		"declaration": true,
 		"noImplicitAny": true,
 		"noImplicitReturns": true,
 		"noImplicitThis": true,
@@ -28,8 +23,9 @@
 		"listFiles": true,
 		"listEmittedFiles": true,
 		"noEmitOnError": true,
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"declaration": true,
+		"emitDecoratorMetadata": true
 	},
-	"exclude": ["./test"]
+	"exclude": ["node_modules"]
 }
-

@@ -3,10 +3,6 @@ import {customElement, property} from '@polymer/decorators';
 import '@polymer/paper-dialog/paper-dialog';
 import '@polymer/paper-button/paper-button';
 
-/**
- * Type representing details expected when firing a Zion.EventHelpers.open_confirm event.
- * Steps for opening a dialog:
- */
 export interface ConfirmDialogConfig {
 	dialogTitle: string;
 	dialogText: string;
